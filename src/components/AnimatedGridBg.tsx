@@ -6,7 +6,7 @@ const AnimatedGridBg = () => {
     <AnimatedGridPattern
       numSquares={30}
       maxOpacity={0.1}
-      duration={4}
+      duration={10}
       repeatDelay={2}
       className={cn(
         "[mask-image:radial-gradient(500px_circle_at_center,white,transparent)]",

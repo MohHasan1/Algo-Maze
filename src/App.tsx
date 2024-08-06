@@ -5,7 +5,7 @@ import Main from "./components/layout/Main";
 function App() {
   return (
     <>
-      <section className="h-screen overflow-hidden">
+      <section className="h-screen xl:overflow-hidden">
         <TopBar />
 
         <Main />

@@ -8,7 +8,7 @@ const Footer = () => {
     <footer className="relative min-h-6 overflow-hidden">
       <AnimatedGridBg />
 
-      <section className="min-h-14 p-5 flex justify-end items-center gap-5">
+      <section className="min-h-14 p-3 md:p-5 flex justify-end items-center gap-5">
         <a
           href="https://linkedin.com/in/mohammed-hasan-41444b268"
           target="_blank"
