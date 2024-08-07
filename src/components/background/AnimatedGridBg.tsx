@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import AnimatedGridPattern from "./magicui/animated-grid-pattern";
+import AnimatedGridPattern from "../magicui/animated-grid-pattern";
 
 const AnimatedGridBg = () => {
   return (

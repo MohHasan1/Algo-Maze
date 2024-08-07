@@ -5,8 +5,10 @@ type State = {
   rows: number;
   nodes: number;
   grid: any[][];
+  gridSize: "sm" | "md" | "lg";
   startNode: any;
   goalNode: any;
+  inProgress: boolean;
 };
 
 type Actions = {
@@ -16,6 +18,7 @@ type Actions = {
   setStartNode: (startNode: any) => void;
   setGoalNode: (goalNode: any) => void;
   setStartnGoalNodes: (startNode: any, goalNode: any) => void;
+  toggleInProgress: () => void;
 };
 
 const initializeGrid = (rows: number, nodes: number) => {
@@ -38,13 +41,18 @@ const useStore = create<State & Actions>((set, get) => ({
   rows: 19,
   nodes: 19,
   grid: grid,
+  gridSize: "sm",
   startNode: startNode,
   goalNode: goalNode,
+  inProgress: false,
 
   // Methods:
   setGrid: (grid: any[][]) => set({ grid: grid }),
   reset: () => {
-    const { grid, startNode, goalNode } = initializeGrid(get().rows, get().nodes);
+    const { grid, startNode, goalNode } = initializeGrid(
+      get().rows,
+      get().nodes
+    );
     set({ grid, startNode, goalNode });
   },
   setStartnGoalNodes: (startNode: any, goalNode: any) => {
@@ -58,11 +66,11 @@ const useStore = create<State & Actions>((set, get) => ({
   },
   setGridSize: (size: "sm" | "md" | "lg") => {
     if (size == "sm") {
-      set({ rows: 19, nodes: 19 });
+      set({ rows: 19, nodes: 19, gridSize: "sm" });
     } else if (size == "md") {
-      set({ rows: 29, nodes: 29 });
+      set({ rows: 29, nodes: 29, gridSize: "md" });
     } else {
-      set({ rows: 39, nodes: 39 });
+      set({ rows: 39, nodes: 39, gridSize: "lg" });
     }
     set((state) => ({ grid: createGrid(state.rows, state.nodes) }));
     const { grid, startNode, goalNode } = initializeGrid(
@@ -70,6 +78,9 @@ const useStore = create<State & Actions>((set, get) => ({
       get()?.nodes
     );
     set({ grid, startNode, goalNode });
+  },
+  toggleInProgress: () => {
+    set((state) => ({ inProgress: !state.inProgress }));
   },
 }));
 

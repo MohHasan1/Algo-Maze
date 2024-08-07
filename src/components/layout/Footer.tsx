@@ -1,6 +1,7 @@
 import { Github, Linkedin } from "lucide-react";
 import ShimmerButton from "../magicui/shimmer-button";
-import AnimatedGridBg from "../AnimatedGridBg";
+import AnimatedGridBg from "../background/AnimatedGridBg";
+
 
 // <div className="relative flex h-[500px] w-full items-center justify-center overflow-hidden rounded-lg border bg-background p-20 md:shadow-xl">
 const Footer = () => {

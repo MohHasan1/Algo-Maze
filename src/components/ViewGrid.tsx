@@ -15,14 +15,17 @@ function isNodeEqual(node1: any, node2: any) {
 const ViewGrid = () => {
   const maze = useStore((state) => state.grid);
   const setGrid = useStore((state) => state.setGrid);
-  const { startNode, goalNode, setStartNode, setGoalNode } = useStore(
+  const { startNode, goalNode, setStartNode, setGoalNode, gridSize } = useStore(
     useShallow((state) => ({
       startNode: state.startNode,
       goalNode: state.goalNode,
       setStartNode: state.setStartNode,
       setGoalNode: state.setGoalNode,
+      gridSize: state.gridSize,
     }))
   );
+
+  console.log(gridSize);
 
   const [isGoalClicked, setisGoalClicked] = useState<boolean>(false);
   const [isStartClicked, setisStartClicked] = useState<boolean>(false);
@@ -48,10 +51,10 @@ const ViewGrid = () => {
 
   return (
     <>
-      <NeonGradientCard className="w-fit h-fit">
-        <section className="relative w-fit border-red-300 rounded-xl">
+      <NeonGradientCard className="w-fit" padding="p-0" borderRadius={0}>
+        <section className="relative w-fit  border-blue-300">
           {maze?.map((row, rowNum) => (
-            <div key={rowNum} className="flex rounded-xl">
+            <div key={rowNum} className="flex">
               {row.map((node) => (
                 <div
                   key={node.rowNum + "-" + node.nodeNum}
@@ -67,11 +70,14 @@ const ViewGrid = () => {
                     onNodeClick(node);
                   }}
                   className={cn(
-                    "size-4 sm:size-5 xl:size-6 border-gray-800/70 border hover:bg-slate-50 hover:cursor-pointer",
+                    `${gridSize === "sm" && "size-4 sm:size-5 xl:size-7"}`,
+                    `${gridSize === "md" && "size-3 sm:size-3 xl:size-6"}`,
+                    `${gridSize === "lg" && "size-2 sm:size-3 xl:size-5"}`,
+                    " border-blue-800/70 border hover:bg-blue-200 hover:cursor-pointer",
                     `${
                       node.isPath && node.isExplored
                         ? "bg-blue-400"
-                        : "bg-blue-800/75"
+                        : "bg-blue-800/55"
                     }`,
                     `${node.isWall && "bg-yellow-500"}`,
                     `${node.nodeNum === 0 && node.isWall && "bg-red-600"}`,

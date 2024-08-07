@@ -100,6 +100,14 @@ module.exports = {
           "0%": { backgroundPosition: "top center" },
           "100%": { backgroundPosition: "bottom center" },
         },
+        shimmer: {
+          "0%, 90%, 100%": {
+            "background-position": "calc(-100% - var(--shimmer-width)) 0",
+          },
+          "30%, 60%": {
+            "background-position": "calc(100% + var(--shimmer-width)) 0",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -108,6 +116,7 @@ module.exports = {
         slide: "slide var(--speed) ease-in-out infinite alternate",
         backgroundPositionSpin:
           "background-position-spin 3000ms infinite alternate",
+        shimmer: "shimmer 8s infinite",
       },
     },
   },
