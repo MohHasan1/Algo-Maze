@@ -9,3 +9,7 @@ export type NODE_TYPE = {
   isRevPath: boolean;
   isFwdPath: boolean;
 };
+
+export type ParNodeType = Partial<NODE_TYPE>
+
+export type GridType = Partial<NODE_TYPE>[][];

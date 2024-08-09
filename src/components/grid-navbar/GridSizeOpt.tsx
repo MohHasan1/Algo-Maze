@@ -1,5 +1,5 @@
 import useStore from "@/store/store";
-import RadioSelect from "../RadioSelect";
+import RadioSelect from "../select/RadioSelect";
 import GradientText from "../typography/GradientText";
 
 const GridSizeOpt = () => {

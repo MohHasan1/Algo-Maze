@@ -5,23 +5,37 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { cn } from "@/lib/utils";
 import { FC } from "react";
 
-const OptionSelect: FC<Props> = ({ defaultVal, placeHolder, selectItems, disabled,  Fn }) => {
+const OptionSelect: FC<Props> = ({
+  className,
+  defaultVal,
+  placeHolder,
+  selectItems,
+  disabled,
+  Fn,
+}) => {
   const handleOptionChange = (value: string) => {
     Fn(value);
-    console.log(value);
   };
 
   return (
     <>
-      <Select onValueChange={handleOptionChange} defaultValue={defaultVal} disabled={disabled}>
-        <SelectTrigger className="w-[180px]">
+      <Select
+        onValueChange={handleOptionChange}
+        defaultValue={defaultVal}
+        disabled={disabled}
+      >
+        <SelectTrigger className={cn("w-[180px]", className)}>
           <SelectValue placeholder={placeHolder} />
         </SelectTrigger>
+
         <SelectContent>
           {selectItems.map((item) => (
-            <SelectItem className="p-2" value={item.value}>{item.label}</SelectItem>
+            <SelectItem key={item.value} className="p-2" value={item.value}>
+              {item.label}
+            </SelectItem>
           ))}
         </SelectContent>
       </Select>
@@ -35,9 +49,10 @@ type selectItem = {
   label: string;
 };
 type Props = {
-  defaultVal?:string;
+  className?: string;
+  defaultVal?: string;
   placeHolder: string;
   selectItems: selectItem[];
-  disabled?:boolean;
+  disabled?: boolean;
   Fn: (...arg: any) => void;
 };

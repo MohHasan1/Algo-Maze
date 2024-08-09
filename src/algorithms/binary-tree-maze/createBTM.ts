@@ -1,23 +1,28 @@
+import { GridType, NODE_TYPE } from "@/types/type";
 import { createGrid } from "../createGrid";
 
-async function createBTM(rows: number, nodes: number, setMaze?: any) {
-  const grid: any = createGrid(rows, nodes);
-
-  const setGrid = setUpGridWalls(grid, setMaze);
-
-  grid[1][1].isStart = true;
-  grid[grid.length - 2][grid[0].length - 2].isGoal = true;
-
-  const maze: any = await generateBTM(setGrid, setMaze);
-
-
-  return maze;
+export default async function createBTM(
+  rows: number,
+  nodes: number,
+  setMaze: (grid: GridType) => void
+) {
+  const grid = createGrid(rows, nodes);
+  const setUpGrid = await setUpGridWalls(grid, setMaze);
+  const maze = await generateBTM(setUpGrid, setMaze);
+  return await initializeStartAndGoalNodes(maze, setMaze);
 }
 
-// pre-grid-setup for generating Binary Tree Maze. //
-function setUpGridWalls(grid: any[][], setMaze: any) {
-  function setWalls(rowNum: number, nodeNum: number) {
-    if (rowNum >= grid.length) return;
+// __ pre-grid-setup (all even nodes and rows are made walls) to create a BTM __ //
+async function setUpGridWalls(
+  grid: GridType,
+  setMaze: (grid: GridType) => void
+) {
+  const maxRow = grid.length;
+  const maxNodeinRow = grid[0].length;
+
+  // Function to recursively set walls
+  async function setWalls(rowNum: number, nodeNum: number): Promise<void> {
+    if (rowNum >= maxRow) return;
 
     const doesRowExist = grid[rowNum];
     const doesNodeExist = grid[rowNum][nodeNum];
@@ -25,7 +30,7 @@ function setUpGridWalls(grid: any[][], setMaze: any) {
 
     let nextRowNum = rowNum;
     let nextNodeNum = nodeNum + 1;
-    if (nodeNum >= grid[0].length) {
+    if (nodeNum >= maxNodeinRow) {
       nextRowNum = rowNum + 1;
       nextNodeNum = 0;
     }
@@ -35,22 +40,34 @@ function setUpGridWalls(grid: any[][], setMaze: any) {
       grid[rowNum][nodeNum].isPath = false;
     }
 
+    // Deep copy grid to avoid shallow copy issues
     setMaze([...grid]);
 
-    setTimeout(() => setWalls(nextRowNum, nextNodeNum), 0);
+    // Use await for non-blocking execution (a way to introduce delay)
+    await new Promise<void>((resolve) => setTimeout(resolve, 0));
+    // will wait till the promise is resolve
+    await setWalls(nextRowNum, nextNodeNum);
   }
 
-  setWalls(0, 0);
-
-  return [...grid];
+  // Start recursion and return the final promise
+  await setWalls(0, 0);
+  return grid;
 }
 
 // Generating Binary Tree Maze using the setup Grid. //
-function generateBTM(preSetGrid: any, setMaze: any): Promise<any> {
-  return new Promise((resolve) => {
-    function removeWalls(rowNum: number, nodeNum: number) {
-      if (rowNum >= preSetGrid.length) {
-        resolve(preSetGrid); // Resolve the promise once the maze generation is complete
+async function generateBTM(
+  preSetGrid: GridType,
+  setMaze: (grid: GridType) => void
+): Promise<GridType> {
+  const maxRow = preSetGrid.length;
+  const maxNodeinRow = preSetGrid[0].length;
+
+  // Function to recursively remove walls
+  function removeWalls(rowNum: number, nodeNum: number): Promise<void> {
+    return new Promise((resolve) => {
+      // Check if we have processed all rows
+      if (rowNum >= maxRow) {
+        resolve();
         return;
       }
 
@@ -59,54 +76,93 @@ function generateBTM(preSetGrid: any, setMaze: any): Promise<any> {
 
       let nextRowNum = rowNum;
       let nextNodeNum = nodeNum + 1;
-      if (nodeNum >= preSetGrid[0].length) {
+      if (nodeNum >= maxNodeinRow) {
         nextRowNum = rowNum + 1;
         nextNodeNum = 0;
       }
 
       if (doesRowExist && doesNodeExist) {
-        setNode(preSetGrid, rowNum, nodeNum);
-        setMaze([...preSetGrid]);
+        breakWallInMaze(preSetGrid, rowNum, nodeNum);
+        setMaze([...preSetGrid]); // Ensure a fresh grid copy is used
       }
 
-      setTimeout(() => removeWalls(nextRowNum, nextNodeNum), 25);
-    }
-    removeWalls(0, 0);
-  });
+      // Use setTimeout for non-blocking execution
+      setTimeout(() => removeWalls(nextRowNum, nextNodeNum).then(resolve), 0);
+    });
+  }
+
+  // Start the wall removal process
+  return removeWalls(0, 0).then(() => preSetGrid);
 }
 
-// Removes Walls and connect nodes to create a path. //
-function setNode(newMaze: any[][], rowNum: number, nodeNum: number) {
-  if (rowNum >= newMaze.length || nodeNum >= newMaze[0].length) return;
+// __ Breaks a wall in the maze grid to create a path, based on random direction. __ //
+function breakWallInMaze(
+  setUpGrid: Partial<NODE_TYPE>[][],
+  rowNum: number,
+  nodeNum: number
+) {
+  if (rowNum >= setUpGrid.length || nodeNum >= setUpGrid[0].length) return;
 
+  const ROWS = setUpGrid.length;
+  const COLS = setUpGrid[0].length;
+  const SEC_LAST_ROW = ROWS - 2;
+  const SEC_LAST_NODE = COLS - 2;
+  const direction = Math.random() < 0.5 ? "left" : "right";
   // Remember: We will be changing one node at a time, not the entire grid.
   const isRowAndNodeOdd = rowNum % 2 !== 0 && nodeNum % 2 !== 0;
-  let dir = Math.random() < 0.5 ? 1 : 2;
 
-  // Remember: we will break a wall in either diagonal: (R - B)
+  // Remember: we will break a wall (even-walls) in either direction: (R - D)
   if (isRowAndNodeOdd) {
-    if (rowNum === newMaze.length - 2 && nodeNum !== newMaze[0].length - 2) {
-      newMaze[rowNum][nodeNum + 1].isWall = false;
-      newMaze[rowNum][nodeNum + 1].isPath = true;
+    if (rowNum === SEC_LAST_ROW && nodeNum !== SEC_LAST_NODE) {
+      setUpGrid[rowNum][nodeNum + 1].isWall = false;
+      setUpGrid[rowNum][nodeNum + 1].isPath = true;
       return;
     }
 
-    if (nodeNum === newMaze[0].length - 2 && rowNum !== newMaze.length - 2) {
-      newMaze[rowNum + 1][nodeNum].isWall = false;
-      newMaze[rowNum + 1][nodeNum].isPath = true;
+    if (nodeNum === SEC_LAST_NODE && rowNum !== SEC_LAST_ROW) {
+      setUpGrid[rowNum + 1][nodeNum].isWall = false;
+      setUpGrid[rowNum + 1][nodeNum].isPath = true;
       return;
     }
 
-    if (rowNum !== newMaze.length - 2 && nodeNum !== newMaze[0].length - 2) {
-      if (dir == 1) {
-        newMaze[rowNum][nodeNum + 1].isWall = false;
-        newMaze[rowNum][nodeNum + 1].isPath = true;
+    if (rowNum !== SEC_LAST_ROW && nodeNum !== SEC_LAST_NODE) {
+      if (direction == "left") {
+        setUpGrid[rowNum][nodeNum + 1].isWall = false;
+        setUpGrid[rowNum][nodeNum + 1].isPath = true;
       } else {
-        newMaze[rowNum + 1][nodeNum].isWall = false;
-        newMaze[rowNum + 1][nodeNum].isPath = true;
+        setUpGrid[rowNum + 1][nodeNum].isWall = false;
+        setUpGrid[rowNum + 1][nodeNum].isPath = true;
       }
     }
   }
 }
 
-export default createBTM;
+// __ Sets the start and goal nodes in the maze grid __ //
+async function initializeStartAndGoalNodes(
+  maze: GridType,
+  setMaze: (grid: GridType) => void
+) {
+  const points = [maze[1][1], maze[maze.length - 2][maze[0].length - 2]];
+
+  async function addPoints(index: number) {
+    if (index >= points.length) return;
+
+    if (index === 0) {
+      points[index].isStart = true;
+    } else {
+      points[index].isGoal = true;
+    }
+
+    setMaze([...maze]);
+    // wait for a bit to introduce delay // we resolve the promise after some time ms.
+    await new Promise((resolve) => setTimeout(resolve, 100)); //
+
+    // wait till the work is done and the call again //
+    await addPoints(index + 1);
+  }
+
+  // we want to wait untill it finishes //
+  await addPoints(0);
+
+  return [...maze];
+}

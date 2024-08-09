@@ -65,7 +65,7 @@ async function visualizeFwdPath(maze: any[][], path: any[], setMaze: any) {
   await visualizeStep(0);
 }
 
-async function BFS(maze: any[][], setMaze: any, goalNode: any, startNode: any, speed:number=100) {
+async function DFS(maze: any[][], setMaze: any, goalNode: any, startNode: any, speed:number=100) {
   const totalRows = maze.length;
   const totalNodesInRow = maze[0].length;
 
@@ -82,7 +82,7 @@ async function BFS(maze: any[][], setMaze: any, goalNode: any, startNode: any, s
         return;
       }
 
-      const currNode: any = frontier.shift(); // Change to shift for BFS./ to pop for DFS
+      const currNode: any = frontier.pop(); // Change to shift for BFS./ to pop for DFS
       if (!currNode) {
         resolve();
         return;
@@ -150,4 +150,4 @@ async function BFS(maze: any[][], setMaze: any, goalNode: any, startNode: any, s
   await processNextNode();
 }
 
-export default BFS;
+export default DFS;

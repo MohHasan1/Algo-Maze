@@ -31,22 +31,51 @@ const ViewGrid = () => {
   const [isStartClicked, setisStartClicked] = useState<boolean>(false);
 
   function onNodeClick(node: any) {
+    if (isNodeEqual(node, startNode) || isNodeEqual(node, goalNode)) return;
+
     if (node.isWall) {
       console.log("sorry its a wall!");
     } else if (isStartClicked) {
       // later i will use subscribe function, where we will subscribe with a var, and triiger a func to change another var.
       const grid = [...maze];
-      grid[startNode.rowNum][startNode.nodeNum].isStart = false;
+      grid[startNode.rowNum!][startNode.nodeNum!].isStart = false;
       setStartNode(node);
       grid[node.rowNum][node.nodeNum].isStart = true;
       setGrid(grid);
     } else if (isGoalClicked) {
       const grid = [...maze];
-      grid[goalNode.rowNum][goalNode.nodeNum].isGoal = false;
+      grid[goalNode.rowNum!][goalNode.nodeNum!].isGoal = false;
       setGoalNode(node);
       grid[node.rowNum][node.nodeNum].isGoal = true;
       setGrid(grid);
     }
+  }
+
+  const [draggedNode, setDraggedNode] = useState<any>(null);
+
+  function onDragStart(node: any) {
+    setDraggedNode(node);
+  }
+
+  function onDrop(node: any) {
+    if (!draggedNode) return;
+    if (isNodeEqual(node, startNode) || isNodeEqual(node, goalNode)) return;
+    if (node.isWall) return;
+
+    const grid = [...maze];
+
+    if (isNodeEqual(draggedNode, startNode)) {
+      grid[startNode.rowNum!][startNode.nodeNum!].isStart = false;
+      setStartNode(node);
+      grid[node.rowNum][node.nodeNum].isStart = true;
+    } else if (isNodeEqual(draggedNode, goalNode)) {
+      grid[goalNode.rowNum!][goalNode.nodeNum!].isGoal = false;
+      setGoalNode(node);
+      grid[node.rowNum][node.nodeNum].isGoal = true;
+    }
+
+    setGrid(grid);
+    setDraggedNode(null);
   }
 
   return (
@@ -55,8 +84,12 @@ const ViewGrid = () => {
         <section className="relative w-fit  border-blue-300">
           {maze?.map((row, rowNum) => (
             <div key={rowNum} className="flex">
-              {row.map((node) => (
+              {row?.map((node) => (
                 <div
+                  draggable={node.isStart || node.isGoal}
+                  onDragStart={() => onDragStart(node)}
+                  onDragOver={(e) => e.preventDefault()} // Allows dropping
+                  onDrop={() => onDrop(node)}
                   key={node.rowNum + "-" + node.nodeNum}
                   onClick={() => {
                     setisStartClicked(false);
@@ -105,8 +138,7 @@ const ViewGrid = () => {
                       !node.isGoal &&
                       !node.isStart &&
                       "bg-green-100"
-                    }`,
-                    `${node.isGoalPath && "bg-yellow-700"}`
+                    }`
                   )}
                 >
                   {node.isWall && (

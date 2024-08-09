@@ -1,3 +1,5 @@
+import { NODE_TYPE } from "@/types/type";
+
 export function createGrid(maxRows: number=19, maxNodes: number=19) {
   const grid = [];
   for (let rowNum = 0; rowNum < maxRows; rowNum++) {
@@ -9,14 +11,15 @@ export function createGrid(maxRows: number=19, maxNodes: number=19) {
 }
 
 function createRowOfNodes(rowNum: number, maxNodes: number) {
-  const row = [];
+  const row:Partial<NODE_TYPE>[] = [];
   for (let nodeNum = 0; nodeNum < maxNodes; nodeNum++) {
     row.push({
       rowNum,
       nodeNum,
+      isStart: false,
+      isGoal: false,
       isWall: false,
       isPath: true,
-      isExplored: false,
     });
   }
   return row;
