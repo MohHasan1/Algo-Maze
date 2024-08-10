@@ -4,6 +4,7 @@ import { BrickWall } from "lucide-react";
 import { useShallow } from "zustand/react/shallow";
 import { useState } from "react";
 import { NeonGradientCard } from "./magicui/neon-gradient-card";
+import { ParNodeType } from "@/types/type";
 
 function isNodeEqual(node1: any, node2: any) {
   if (node1.rowNum === node2.rowNum && node1.nodeNum === node2.nodeNum) {
@@ -25,7 +26,7 @@ const ViewGrid = () => {
     }))
   );
 
-  console.log(gridSize);
+  // console.log(gridSize);
 
   const [isGoalClicked, setisGoalClicked] = useState<boolean>(false);
   const [isStartClicked, setisStartClicked] = useState<boolean>(false);
@@ -53,25 +54,26 @@ const ViewGrid = () => {
 
   const [draggedNode, setDraggedNode] = useState<any>(null);
 
-  function onDragStart(node: any) {
-    setDraggedNode(node);
+  function onDragStart(DraggedNode: ParNodeType) {
+    setDraggedNode(DraggedNode);
   }
 
-  function onDrop(node: any) {
+  function onDrop(newNode: ParNodeType) {
     if (!draggedNode) return;
-    if (isNodeEqual(node, startNode) || isNodeEqual(node, goalNode)) return;
-    if (node.isWall) return;
+    if (isNodeEqual(newNode, startNode) || isNodeEqual(newNode, goalNode))
+      return;
+    if (newNode.isWall) return;
 
     const grid = [...maze];
 
     if (isNodeEqual(draggedNode, startNode)) {
       grid[startNode.rowNum!][startNode.nodeNum!].isStart = false;
-      setStartNode(node);
-      grid[node.rowNum][node.nodeNum].isStart = true;
+      setStartNode(newNode);
+      grid[newNode.rowNum!][newNode.nodeNum!].isStart = true;
     } else if (isNodeEqual(draggedNode, goalNode)) {
       grid[goalNode.rowNum!][goalNode.nodeNum!].isGoal = false;
-      setGoalNode(node);
-      grid[node.rowNum][node.nodeNum].isGoal = true;
+      setGoalNode(newNode);
+      grid[newNode.rowNum!][newNode.nodeNum!].isGoal = true;
     }
 
     setGrid(grid);
@@ -88,7 +90,7 @@ const ViewGrid = () => {
                 <div
                   draggable={node.isStart || node.isGoal}
                   onDragStart={() => onDragStart(node)}
-                  onDragOver={(e) => e.preventDefault()} // Allows dropping
+                  onDragOver={(e) => e.preventDefault()}
                   onDrop={() => onDrop(node)}
                   key={node.rowNum + "-" + node.nodeNum}
                   onClick={() => {
@@ -103,16 +105,19 @@ const ViewGrid = () => {
                     onNodeClick(node);
                   }}
                   className={cn(
-                    `${gridSize === "sm" && "size-4 sm:size-5 xl:size-7"}`,
-                    `${gridSize === "md" && "size-3 sm:size-3 xl:size-6"}`,
-                    `${gridSize === "lg" && "size-2 sm:size-3 xl:size-5"}`,
-                    " border-blue-800/70 border hover:bg-blue-200 hover:cursor-pointer",
+                    `${gridSize === "sm" && "size-4 sm:size-5 md:size-6 xl:size-7"}`,
+                    `${gridSize === "md" && "size-4 sm:size-4 md:size-5 xl:size-6"}`,
+                    `${gridSize === "lg" && "size-2 sm:size-4 md:size-6 xl:size-5"}`,
+                    "border-blue-800/70 border hover:bg-blue-200 hover:cursor-pointer ",
                     `${
                       node.isPath && node.isExplored
                         ? "bg-blue-400"
                         : "bg-blue-800/55"
                     }`,
-                    `${node.isWall && "bg-yellow-500"}`,
+                    `${
+                      node.isWall &&
+                      "bg-yellow-500 transition-colors duration-500 ease-linear"
+                    }`,
                     `${node.nodeNum === 0 && node.isWall && "bg-red-600"}`,
                     `${
                       node.nodeNum === maze[0].length - 1 &&
@@ -125,19 +130,25 @@ const ViewGrid = () => {
                       node.isWall &&
                       "bg-red-600"
                     }`,
-                    `${node.isStart && "bg-orange-950"}`,
-                    `${node.isGoal && "bg-emerald-500"}`,
+                    `${
+                      node.isStart &&
+                      "bg-orange-950 transition-colors duration-500 ease-linear"
+                    }`,
+                    `${
+                      node.isGoal &&
+                      "bg-emerald-500 transition-colors duration-1000 ease-linear"
+                    }`,
                     `${
                       node.isRevPath &&
                       !node.isGoal &&
                       !node.isStart &&
-                      "bg-purple-500"
+                      "bg-purple-500 transition-colors duration-500 ease-out"
                     }`,
                     `${
                       node.isFwdPath &&
                       !node.isGoal &&
                       !node.isStart &&
-                      "bg-green-100"
+                      "bg-green-100 transition-colors duration-500 ease-linear"
                     }`
                   )}
                 >

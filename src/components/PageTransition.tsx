@@ -1,4 +1,5 @@
 import { useState, useEffect, type ReactNode, type FC } from "react";
+import { Button } from "./ui/button";
 
 const PageTransition: FC<PT_Props> = ({
   page1,

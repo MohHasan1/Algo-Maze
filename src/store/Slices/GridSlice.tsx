@@ -1,50 +1,41 @@
-import { createGrid } from "@/algorithms/createGrid";
-import { GridType, ParNodeType } from "@/types/type";
+import { createGrid } from "@/algorithms/maze/createGrid";
+import { initializeGrid } from "@/algorithms/maze/initialGrid";
+import { INITIAL_GRID } from "@/constants/constant";
+import { GridType } from "@/types/type";
 import { deepCopy } from "@/utils/deepCopy";
 
 import { StateCreator } from "zustand";
+import { MazeSliceType } from "./MazeSlice";
 
 type State = {
   rows: number;
   nodes: number;
-  grid: GridType;
-  cleanMaze: any;
+  grid: GridType; // Initial maze and all the maze visualiztion happens in thsi grid.
   gridSize: "sm" | "md" | "lg";
-  startNode: ParNodeType;
-  goalNode: ParNodeType;
-  inProgress: boolean;
 };
 
 type Actions = {
   setGrid: (grid: GridType) => void;
-  setCleanMaze: (grid: any) => void;
-  clear: () => void;
-  reset: () => void;
+  clearGrid: () => void;
   setGridSize: (size: "sm" | "md" | "lg") => void;
-  setStartNode: (startNode: ParNodeType) => void;
-  setGoalNode: (goalNode: ParNodeType) => void;
-  setStartnGoalNodes: (startNode: ParNodeType, goalNode: ParNodeType) => void;
-  toggleInProgress: () => void;
 };
 
 export type GridSliceType = State & Actions;
 
-const initializeGrid = (rows: number, nodes: number) => {
-  const grid = createGrid(rows, nodes);
-  const startNode = grid[1][1];
-  const goalNode = grid[rows - 2][nodes - 2];
-  return { grid, startNode, goalNode };
-};
-
 // run only once when the app starts up:
-const initialSize = { rows: 19, nodes: 19 };
 const { grid, startNode, goalNode } = initializeGrid(
-  initialSize.rows,
-  initialSize.nodes
+  INITIAL_GRID.rows,
+  INITIAL_GRID.nodes
 );
 
-const createGridSlice: StateCreator<State & Actions> = (set, get) => ({
+const createGridSlice: StateCreator<
+  GridSliceType & MazeSliceType,
+  [],
+  [],
+  GridSliceType
+> = (set, get) => ({
   // variables:
+  isGridMaze: false,
   rows: 19,
   nodes: 19,
   grid: grid,
@@ -57,36 +48,18 @@ const createGridSlice: StateCreator<State & Actions> = (set, get) => ({
   // Methods:
   setGrid: (grid: GridType) => set({ grid: grid }),
 
-  setCleanMaze: (grid: GridType) => set({ cleanMaze: grid }),
-
-  reset: () => {
-    const cleanMaze = get().cleanMaze;
-
-    set({
-      grid: deepCopy(cleanMaze),
-      cleanMaze: deepCopy(cleanMaze),
-    });
-  },
-
-  clear: () => {
-    console.log("Clearing grid...");
+  clearGrid: () => {
     const { grid, startNode, goalNode } = initializeGrid(
       get().rows,
       get().nodes
     );
-    set({ grid, cleanMaze: deepCopy(grid), startNode, goalNode });
-  },
-
-  setStartnGoalNodes: (startNode: ParNodeType, goalNode: ParNodeType) => {
-    set(() => ({ startNode: startNode, goalNode: goalNode }));
-  },
-
-  setStartNode: (startNode: ParNodeType) => {
-    set(() => ({ startNode }));
-  },
-
-  setGoalNode: (goalNode: ParNodeType) => {
-    set(() => ({ goalNode }));
+    set({
+      grid,
+      cleanMaze: deepCopy(grid),
+      startNode,
+      goalNode,
+      isGridMaze: false,
+    });
   },
 
   setGridSize: (size: "sm" | "md" | "lg") => {
@@ -103,10 +76,6 @@ const createGridSlice: StateCreator<State & Actions> = (set, get) => ({
       get()?.nodes
     );
     set({ grid, startNode, goalNode });
-  },
-
-  toggleInProgress: () => {
-    set((state) => ({ inProgress: !state.inProgress }));
   },
 });
 

@@ -1,18 +1,20 @@
 import { Button } from "../ui/button";
-import createBTM from "@/algorithms/binary-tree-maze/createBTM";
+
 import useStore from "@/store/store";
 import OptionSelect from "../select/OptionSelect";
 import GradientText from "../typography/GradientText";
-import createQuickBTM from "@/algorithms/binary-tree-maze/createQuickBTM";
+
 import { deepCopy } from "@/utils/deepCopy";
-import { MAZE_ALGO } from "@/constants";
+import { MAZE_ALGO } from "@/constants/constant";
 import { GridType } from "@/types/type";
+import createBTM from "@/algorithms/maze/binary-tree-maze/createBTM";
+import createQuickBTM from "@/algorithms/maze/binary-tree-maze/createQuickBTM";
 
 const MazeGenOpt = () => {
   const rows = useStore((state) => state.rows);
   const nodes = useStore((state) => state.nodes);
   const setGrid = useStore((state) => state.setGrid);
-  const clear = useStore((state) => state.clear);
+  const clear = useStore((state) => state.clearGrid);
   const inProgress = useStore((state) => state.inProgress);
   const toggleInProgress = useStore((state) => state.toggleInProgress);
   const setCleanMaze = useStore((state) => state.setCleanMaze);
@@ -55,7 +57,7 @@ const MazeGenOpt = () => {
           </Button>
         </div>
         <Button disabled={inProgress} variant={"outline"} onClick={runMazeAlgo}>
-          Create Maze
+          Generate Maze
         </Button>
       </div>
     </>

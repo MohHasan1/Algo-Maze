@@ -1,7 +1,7 @@
-import GridSizeOpt from "./GridSizeOpt";
-import MazeGenOpt from "./MazeGenOpt";
-import MazeSolvingAlgOpt from "./MazeSolvingAlgOpt";
-import ResetGrid from "./ResetGrid";
+import GridSizeOpt from "./GridSize";
+import MazeGenOpt from "./MazeAlgo";
+import MazeSolvingAlgOpt from "./SearchAlgo";
+import ResetGrid from "./Helper";
 
 const GridNavBar = () => {
   return (
