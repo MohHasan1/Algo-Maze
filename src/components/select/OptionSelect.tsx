@@ -44,6 +44,7 @@ const OptionSelect: FC<Props> = ({
 };
 
 export default OptionSelect;
+
 type selectItem = {
   value: string;
   label: string;

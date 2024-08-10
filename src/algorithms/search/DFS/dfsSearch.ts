@@ -5,7 +5,7 @@ import {
   visualizeRevPath,
   visualizeFwdPath,
 } from "../visualizePath";
-import { clearTimers, getSearchFlag, setSearchflag, setTimer } from "../share";
+import { clearTimers, getSearchFlag, setSearchflag, setTimer } from "../searchState";
 
 async function BFS(
   maze: GridType,

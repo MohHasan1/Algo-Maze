@@ -1,5 +1,5 @@
 import { ParNodeType, GridType } from "@/types/type";
-import { getSearchFlag, setTimer } from "./share";
+import { getSearchFlag, setTimer } from "./searchState";
 
 export function extractPath(
   path: Map<string, number[]>,

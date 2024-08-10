@@ -2,25 +2,27 @@ import useStore from "@/store/store";
 import RadioSelect from "../select/RadioSelect";
 import GradientText from "../typography/GradientText";
 
-const GridSizeOpt = () => {
+const GridSizeBar = () => {
+  const isMazeAlgProgress = useStore((state) => state.isMazeAlgProgress);
+  const isSearchAlgProgress = useStore((state) => state.isSearchAlgProgress);
+
   const setGridSize = useStore((state) => state.setGridSize);
-  const inProgress = useStore((state) => state.inProgress);
 
   return (
     <div className="flex flex-col gap-5">
-      <GradientText>Maze Size</GradientText>
+      <GradientText>Grid Dimension</GradientText>
 
       <RadioSelect
         initialVal="sm"
         options={OPTIONS}
         setFn={setGridSize}
-        disabled={inProgress}
+        disabled={isMazeAlgProgress || isSearchAlgProgress}
       />
     </div>
   );
 };
 
-export default GridSizeOpt;
+export default GridSizeBar;
 
 const OPTIONS = [
   { value: "sm", label: "SMALL", id: "s" },

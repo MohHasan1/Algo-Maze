@@ -1,4 +1,3 @@
-import { createGrid } from "@/algorithms/maze/createGrid";
 import { GridType, ParNodeType } from "@/types/type";
 import { deepCopy } from "@/utils/deepCopy";
 
@@ -8,19 +7,19 @@ import { INITIAL_GRID } from "@/constants/constant";
 import { initializeGrid } from "@/algorithms/maze/initialGrid";
 
 type State = {
-  cleanMaze: any;
+  cleanMaze: GridType;
+  isMazeClean: boolean;
   isGridMaze: boolean;
   startNode: ParNodeType;
   goalNode: ParNodeType;
-  inProgress: boolean;
 };
 
 type Actions = {
   resetMaze: () => void;
   setCleanMaze: (maze: GridType) => void;
+  setIsMazeClean: (clean: boolean) => void;
   setStartNode: (startNode: ParNodeType) => void;
   setGoalNode: (goalNode: ParNodeType) => void;
-  toggleInProgress: () => void;
 };
 
 export type MazeSliceType = State & Actions;
@@ -39,10 +38,10 @@ const createMazeSlice: StateCreator<
 > = (set, get) => ({
   // variables:
   cleanMaze: grid,
+  isMazeClean: true,
   isGridMaze: false,
   startNode: startNode,
   goalNode: goalNode,
-  inProgress: false,
 
   // Methods:
   setCleanMaze: (maze: GridType) => set({ cleanMaze: maze, isGridMaze: true }),
@@ -55,7 +54,12 @@ const createMazeSlice: StateCreator<
       startNode,
       goalNode,
       isGridMaze: true,
+      isMazeClean: true,
     });
+  },
+
+  setIsMazeClean: (clean: boolean) => {
+    set({ isMazeClean: clean });
   },
 
   setStartnGoalNodes: (startNode: ParNodeType, goalNode: ParNodeType) => {
@@ -68,10 +72,6 @@ const createMazeSlice: StateCreator<
 
   setGoalNode: (goalNode: ParNodeType) => {
     set(() => ({ goalNode }));
-  },
-
-  toggleInProgress: () => {
-    set((state) => ({ inProgress: !state.inProgress }));
   },
 });
 

@@ -105,9 +105,9 @@ const ViewGrid = () => {
                     onNodeClick(node);
                   }}
                   className={cn(
-                    `${gridSize === "sm" && "size-4 sm:size-5 md:size-6 xl:size-7"}`,
-                    `${gridSize === "md" && "size-4 sm:size-4 md:size-5 xl:size-6"}`,
-                    `${gridSize === "lg" && "size-2 sm:size-4 md:size-6 xl:size-5"}`,
+                    `${gridSize === "sm" && "size-[1.81rem]"}`,
+                    `${gridSize === "md" && "size-[1.31rem]"}`,
+                    `${gridSize === "lg" && "size-[0.971rem]"}`,
                     "border-blue-800/70 border hover:bg-blue-200 hover:cursor-pointer ",
                     `${
                       node.isPath && node.isExplored

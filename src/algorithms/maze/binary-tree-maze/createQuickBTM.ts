@@ -1,7 +1,6 @@
 import { NODE_TYPE } from "@/types/type";
 import { createGrid } from "../createGrid";
 
-
 export default function createQuickBTM(rows: number = 19, nodes: number = 19) {
   const grid = createGrid(rows, nodes);
   const setUpGrid = setUpWalls(grid);

@@ -1,15 +1,25 @@
 import { GridType, NODE_TYPE } from "@/types/type";
 import { createGrid } from "../createGrid";
+import { getMazeGenFlag, setMazeGenFlag, setMazeTimer } from "../mazeState";
+import { MAZE_STATUS } from "@/constants/constant";
 
 export default async function createBTM(
   rows: number,
   nodes: number,
   setMaze: (grid: GridType) => void
 ) {
+  setMazeGenFlag(true);
   const grid = createGrid(rows, nodes);
-  const setUpGrid = await setUpGridWalls(grid, setMaze);
-  const maze = await generateBTM(setUpGrid, setMaze);
-  return await initializeStartAndGoalNodes(maze, setMaze);
+
+  try {
+    await setUpGridWalls(grid, setMaze);
+    await generateBTM(grid, setMaze);
+    await initializeStartAndGoalNodes(grid, setMaze);
+  } catch (stopStatus) {
+    return stopStatus as string;
+  }
+
+  return grid;
 }
 
 // __ pre-grid-setup (all even nodes and rows are made walls) to create a BTM __ //
@@ -22,6 +32,7 @@ async function setUpGridWalls(
 
   // Function to recursively set walls
   async function setWalls(rowNum: number, nodeNum: number): Promise<void> {
+    if (!getMazeGenFlag()) throw MAZE_STATUS.MazeGenStop;
     if (rowNum >= maxRow) return;
 
     const doesRowExist = grid[rowNum];
@@ -44,55 +55,61 @@ async function setUpGridWalls(
     setMaze([...grid]);
 
     // Use await for non-blocking execution (a way to introduce delay)
-    await new Promise<void>((resolve) => setTimeout(resolve, 0));
+    await new Promise((resolve) => {
+      const timer = setTimeout(resolve, 0);
+      setMazeTimer(timer);
+    });
     // will wait till the promise is resolve
     await setWalls(nextRowNum, nextNodeNum);
   }
 
   // Start recursion and return the final promise
   await setWalls(0, 0);
-  return grid;
 }
 
 // Generating Binary Tree Maze using the setup Grid. //
 async function generateBTM(
   preSetGrid: GridType,
   setMaze: (grid: GridType) => void
-): Promise<GridType> {
+) {
   const maxRow = preSetGrid.length;
   const maxNodeinRow = preSetGrid[0].length;
 
   // Function to recursively remove walls
-  function removeWalls(rowNum: number, nodeNum: number): Promise<void> {
-    return new Promise((resolve) => {
-      // Check if we have processed all rows
-      if (rowNum >= maxRow) {
-        resolve();
-        return;
-      }
+  async function removeWalls(rowNum: number, nodeNum: number) {
+    if (!getMazeGenFlag()) throw MAZE_STATUS.MazeGenStop;
 
-      const doesRowExist = preSetGrid[rowNum];
-      const doesNodeExist = preSetGrid[rowNum][nodeNum];
+    // Check if we have processed all rows
+    if (rowNum >= maxRow) return;
 
-      let nextRowNum = rowNum;
-      let nextNodeNum = nodeNum + 1;
-      if (nodeNum >= maxNodeinRow) {
-        nextRowNum = rowNum + 1;
-        nextNodeNum = 0;
-      }
+    const doesRowExist = preSetGrid[rowNum];
+    const doesNodeExist = preSetGrid[rowNum][nodeNum];
 
-      if (doesRowExist && doesNodeExist) {
-        breakWallInMaze(preSetGrid, rowNum, nodeNum);
-        setMaze([...preSetGrid]); // Ensure a fresh grid copy is used
-      }
+    let nextRowNum = rowNum;
+    let nextNodeNum = nodeNum + 1;
+    if (nodeNum >= maxNodeinRow) {
+      nextRowNum = rowNum + 1;
+      nextNodeNum = 0;
+    }
 
-      // Use setTimeout for non-blocking execution
-      setTimeout(() => removeWalls(nextRowNum, nextNodeNum).then(resolve), 0);
+    if (doesRowExist && doesNodeExist) {
+      breakWallInMaze(preSetGrid, rowNum, nodeNum);
+      setMaze([...preSetGrid]); // Ensure a fresh grid copy is used
+    }
+
+    // Use setTimeout for non-blocking execution
+    await new Promise((resolve) => {
+      const timer = setTimeout(resolve, 0);
+      setMazeTimer(timer);
     });
+
+    await removeWalls(nextRowNum, nextNodeNum);
   }
 
   // Start the wall removal process
-  return removeWalls(0, 0).then(() => preSetGrid);
+  await removeWalls(0, 0);
+
+  return preSetGrid;
 }
 
 // __ Breaks a wall in the maze grid to create a path, based on random direction. __ //
@@ -145,6 +162,7 @@ async function initializeStartAndGoalNodes(
   const points = [maze[1][1], maze[maze.length - 2][maze[0].length - 2]];
 
   async function addPoints(index: number) {
+    if (!getMazeGenFlag()) throw MAZE_STATUS.MazeGenStop;
     if (index >= points.length) return;
 
     if (index === 0) {
@@ -155,7 +173,7 @@ async function initializeStartAndGoalNodes(
 
     setMaze([...maze]);
     // wait for a bit to introduce delay // we resolve the promise after some time ms.
-    await new Promise((resolve) => setTimeout(resolve, 100)); //
+    await new Promise((resolve) => setTimeout(resolve, 150)); //
 
     // wait till the work is done and the call again //
     await addPoints(index + 1);
@@ -164,5 +182,5 @@ async function initializeStartAndGoalNodes(
   // we want to wait untill it finishes //
   await addPoints(0);
 
-  return [...maze];
+  return maze;
 }

@@ -1,5 +1,10 @@
-export const INITIAL_GRID = { rows: 19, nodes: 19 };
+export const INITIAL_GRID = { rows: 21, nodes: 21 };
 
+export const GRID_SIZE = {
+  Small: { rows: 21, nodes: 21 },
+  Medium: { rows: 29, nodes: 29 },
+  Large: { rows: 39, nodes: 39 },
+};
 
 // Local Storage //
 export const LOCAL_STORAGE = { IS_INTRO_SHOWN: "isIntroShown" };
@@ -24,4 +29,8 @@ export const SEARCH_STATUS = {
   OutOfBoundary: "out-of-boundary",
   StopSearch: "stop-search",
   PathFoundButStopSearch: "path-found-stop-search",
+};
+
+export const MAZE_STATUS = {
+  MazeGenStop: "maz-gen-stop",
 };

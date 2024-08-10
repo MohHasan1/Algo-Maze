@@ -5,7 +5,12 @@ import {
   visualizeRevPath,
   visualizeFwdPath,
 } from "../visualizePath";
-import { clearTimers, getSearchFlag, setSearchflag, setTimer } from "../share";
+import {
+  clearTimers,
+  getSearchFlag,
+  setSearchflag,
+  setTimer,
+} from "../searchState";
 
 async function BFS(
   maze: GridType,
@@ -116,3 +121,21 @@ async function BFS(
 }
 
 export default BFS;
+
+// If you ever implement random maze, and want more robust status // 
+/*
+const isStartSurroundedBywall = false;
+
+// if startnode is surrounded by walls this var is true.
+
+// Edited
+if (frontier.length === 0) {
+  if (searchCount === 1 && !isStartSurroundedBywall) {
+    resolve(SEARCH_STATUS.ExploredAlready);
+  } else {
+    resolve(SEARCH_STATUS.PathNotFound);
+  }
+  return;
+}
+
+*/

@@ -8,23 +8,26 @@ import { Slider } from "../ui/slider";
 import { logInfo } from "@/utils/log";
 import DFS from "@/algorithms/search/DFS/dfsSearch";
 import { ToastContainerWrapper, useToast } from "../Toast";
-import { stopSearch } from "@/algorithms/search/share";
 
-const MazeSolvingAlgOpt = () => {
+const SearchAlgoBar = () => {
   // State Variables
   const maze = useStore((state) => state.grid);
   const isGridMaze = useStore((state) => state.isGridMaze);
   const startNode = useStore((state) => state.startNode);
   const goalNode = useStore((state) => state.goalNode);
-  const inProgress = useStore((state) => state.inProgress);
   const speed = useStore((state) => state.mazeSolveV);
   const searchAlgo = useStore((state) => state.searchAlgo);
+  const isMazeAlgProgress = useStore((state) => state.isMazeAlgProgress);
+  const isSearchAlgProgress = useStore((state) => state.isSearchAlgProgress);
 
   // State Methods
   const setGrid = useStore((state) => state.setGrid);
-  const toggleInProgress = useStore((state) => state.toggleInProgress);
+  const setIsMazeClean = useStore((state) => state.setIsMazeClean);
   const setMazeSolveV = useStore((state) => state.setMazeSolveV);
   const setSearchAlgo = useStore((state) => state.setSearchAlgo);
+  const toggleSearcgAlgProgress = useStore(
+    (state) => state.toggleSearcgAlgProgress
+  );
 
   // Toast
   const { infoToast, errorToast, warnToast } = useToast();
@@ -42,7 +45,8 @@ const MazeSolvingAlgOpt = () => {
     }
 
     let status: any;
-    toggleInProgress();
+    setIsMazeClean(false);
+    toggleSearcgAlgProgress();
 
     if (searchAlgo === SEARCH_ALGO.BFS) {
       status = await BFS(maze, setGrid, goalNode, startNode, speed);
@@ -50,7 +54,7 @@ const MazeSolvingAlgOpt = () => {
       status = await DFS(maze, setGrid, goalNode, startNode, speed);
     }
 
-    toggleInProgress();
+    toggleSearcgAlgProgress();
 
     switch (status) {
       case SEARCH_STATUS.PathNotFound:
@@ -93,25 +97,29 @@ const MazeSolvingAlgOpt = () => {
   return (
     <>
       <div className="flex flex-col gap-5">
-        <GradientText>Maze Solving Algorithm</GradientText>
+        <GradientText>Search Algorithm</GradientText>
         <Slider
           defaultValue={[200 - 33.5]}
           max={200}
           step={33.5}
           onValueChange={handleSpeedChange}
-          disabled={inProgress}
+          disabled={isSearchAlgProgress || isMazeAlgProgress}
         />
         <OptionSelect
           placeHolder={"Search Algorithm"}
           selectItems={mazeSolvingAlg}
-          disabled={inProgress}
+          disabled={isSearchAlgProgress || isMazeAlgProgress}
           Fn={setSearchAlgo}
           className="w-full"
         />
-        <Button disabled={inProgress} variant={"outline"} onClick={runAlg}>
+        <Button
+          disabled={isSearchAlgProgress || isMazeAlgProgress}
+          variant={"outline"}
+          onClick={runAlg}
+        >
           Search Maze
         </Button>
-        <Button onClick={stopSearch}>stop vis</Button>
+        {/* <Button onClick={stopSearch}>stop vis</Button> */}
 
         <ToastContainerWrapper />
       </div>
@@ -119,7 +127,7 @@ const MazeSolvingAlgOpt = () => {
   );
 };
 
-export default MazeSolvingAlgOpt;
+export default SearchAlgoBar;
 
 const mazeSolvingAlg = [
   { value: SEARCH_ALGO.BFS, label: "Breadth-First Search (BFS)" },

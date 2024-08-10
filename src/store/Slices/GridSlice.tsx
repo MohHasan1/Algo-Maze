@@ -1,11 +1,11 @@
-import { createGrid } from "@/algorithms/maze/createGrid";
 import { initializeGrid } from "@/algorithms/maze/initialGrid";
-import { INITIAL_GRID } from "@/constants/constant";
+import { GRID_SIZE, INITIAL_GRID } from "@/constants/constant";
 import { GridType } from "@/types/type";
 import { deepCopy } from "@/utils/deepCopy";
 
 import { StateCreator } from "zustand";
 import { MazeSliceType } from "./MazeSlice";
+import createQuickBTM from "@/algorithms/maze/binary-tree-maze/createQuickBTM";
 
 type State = {
   rows: number;
@@ -36,8 +36,8 @@ const createGridSlice: StateCreator<
 > = (set, get) => ({
   // variables:
   isGridMaze: false,
-  rows: 19,
-  nodes: 19,
+  rows: INITIAL_GRID.rows,
+  nodes: INITIAL_GRID.rows,
   grid: grid,
   cleanMaze: grid,
   gridSize: "sm",
@@ -64,18 +64,42 @@ const createGridSlice: StateCreator<
 
   setGridSize: (size: "sm" | "md" | "lg") => {
     if (size == "sm") {
-      set({ rows: 19, nodes: 19, gridSize: "sm" });
+      set({
+        rows: GRID_SIZE.Small.rows,
+        nodes: GRID_SIZE.Small.nodes,
+        gridSize: "sm",
+      });
     } else if (size == "md") {
-      set({ rows: 29, nodes: 29, gridSize: "md" });
+      set({
+        rows: GRID_SIZE.Medium.rows,
+        nodes: GRID_SIZE.Medium.nodes,
+        gridSize: "md",
+      });
     } else {
-      set({ rows: 39, nodes: 39, gridSize: "lg" });
+      set({
+        rows: GRID_SIZE.Large.rows,
+        nodes: GRID_SIZE.Large.nodes,
+        gridSize: "lg",
+      });
     }
-    set((state) => ({ grid: createGrid(state.rows, state.nodes) }));
+
     const { grid, startNode, goalNode } = initializeGrid(
       get()?.rows,
       get()?.nodes
     );
-    set({ grid, startNode, goalNode });
+
+    // If grid's a maze, change size and add a quick maze, else just chnage grid.
+    if (get().isGridMaze) {
+      const maze = createQuickBTM(get()?.rows, get()?.nodes);
+      set({
+        grid: maze,
+        cleanMaze: deepCopy(maze),
+        startNode,
+        goalNode,
+      });
+    } else {
+      set({ grid, startNode, goalNode });
+    }
   },
 });
 
