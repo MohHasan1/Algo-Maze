@@ -6,7 +6,7 @@ import AnimatedGridBg from "../background/AnimatedGridBg";
 // <div className="relative flex h-[500px] w-full items-center justify-center overflow-hidden rounded-lg border bg-background p-20 md:shadow-xl">
 const Footer = () => {
   return (
-    <footer className="relative min-h-6 overflow-hidden">
+    <footer className="relative min-h-14 overflow-hidden">
       <AnimatedGridBg />
 
       <section className="min-h-14 p-3 md:p-5 flex justify-end items-center gap-5">

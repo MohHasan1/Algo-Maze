@@ -45,7 +45,7 @@ const MazeAndGridBar = () => {
   }
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col  md:gap-3 lg:gap-5">
       <GradientText>Grid and Maze Controls</GradientText>
 
       <Button

@@ -1,24 +1,32 @@
-import { resolve } from "path";
 import PageTransition from "./components/PageTransition";
-import { Button } from "./components/ui/button";
 import { LOCAL_STORAGE } from "./constants/constant";
-import { useLocalStorage } from "./hooks/useLocalStorage";
 import Intro from "./page/Intro";
 import Maze from "./page/Maze";
-import { logInfo } from "./utils/log";
+import ScreenNotSupported from "./page/ScreenNotSupported";
 
 function App() {
-  // const {storedValue, setLSValue} = useLocalStorage(LOCAL_STORAGE.IS_INTRO_SHOWN)
   const isIntroShown = sessionStorage.getItem(LOCAL_STORAGE.IS_INTRO_SHOWN);
+
+  const page = (
+    <>
+      <div className="hidden md:block">
+        <Maze />;
+      </div>
+      <div className="block md:hidden">
+        <ScreenNotSupported />
+      </div>
+    </>
+  );
+
   if (isIntroShown === null) {
     sessionStorage.setItem(LOCAL_STORAGE.IS_INTRO_SHOWN, "true");
     return (
       <>
-        <PageTransition page1={<Intro />} page2={<Maze />} />
+        <PageTransition page1={<Intro />} page2={page} />
       </>
     );
   } else {
-    return <Maze />;
+    return page;
   }
 
   // let flag = false; (does not work - why understand it)
@@ -56,7 +64,7 @@ function App() {
   //   // Return 'done' only if not cancelled
   //   return flag ? "cancelled" : result;
   // }
-  
+
   // async function as(index: number) {
   //   return new Promise((resolve) => {
   //     console.log(`Index: ${index}, Flag: ${flag}`);

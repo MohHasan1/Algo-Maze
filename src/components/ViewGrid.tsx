@@ -5,54 +5,67 @@ import { useShallow } from "zustand/react/shallow";
 import { useState } from "react";
 import { NeonGradientCard } from "./magicui/neon-gradient-card";
 import { ParNodeType } from "@/types/type";
-
-function isNodeEqual(node1: any, node2: any) {
-  if (node1.rowNum === node2.rowNum && node1.nodeNum === node2.nodeNum) {
-    return true;
-  }
-  return false;
-}
+import { logInfo } from "@/utils/log";
+import { useToast } from "./Toast";
 
 const ViewGrid = () => {
   const maze = useStore((state) => state.grid);
+  const gridSize = useStore((state) => state.gridSize);
   const setGrid = useStore((state) => state.setGrid);
-  const { startNode, goalNode, setStartNode, setGoalNode, gridSize } = useStore(
+  const { startNode, goalNode, setStartNode, setGoalNode } = useStore(
     useShallow((state) => ({
       startNode: state.startNode,
       goalNode: state.goalNode,
       setStartNode: state.setStartNode,
       setGoalNode: state.setGoalNode,
-      gridSize: state.gridSize,
     }))
   );
+  const { errorToast } = useToast();
 
-  // console.log(gridSize);
-
-  const [isGoalClicked, setisGoalClicked] = useState<boolean>(false);
   const [isStartClicked, setisStartClicked] = useState<boolean>(false);
+  const [isGoalClicked, setisGoalClicked] = useState<boolean>(false);
 
-  function onNodeClick(node: any) {
+  function onNodeClick(clickedNode: ParNodeType) {
+    setisStartClicked(false);
+    setisGoalClicked(false);
+
+    if (isNodeEqual(clickedNode, startNode)) {
+      setisStartClicked(true);
+      logInfo("start node");
+    } else if (isNodeEqual(clickedNode, goalNode)) {
+      logInfo("goal node");
+      setisGoalClicked(true);
+    }
+
+    logInfo("start", isStartClicked);
+    logInfo("goal", isGoalClicked);
+    changeNode(clickedNode);
+  }
+
+  function changeNode(node: ParNodeType) {
     if (isNodeEqual(node, startNode) || isNodeEqual(node, goalNode)) return;
 
     if (node.isWall) {
-      console.log("sorry its a wall!");
-    } else if (isStartClicked) {
-      // later i will use subscribe function, where we will subscribe with a var, and triiger a func to change another var.
-      const grid = [...maze];
-      grid[startNode.rowNum!][startNode.nodeNum!].isStart = false;
+      errorToast("Sorry, its a wall", "wall");
+      return;
+    }
+
+    if (isStartClicked) {
+      logInfo("moving start node");
+      maze[startNode.rowNum!][startNode.nodeNum!].isStart = false;
       setStartNode(node);
-      grid[node.rowNum][node.nodeNum].isStart = true;
-      setGrid(grid);
+      maze[node.rowNum!][node.nodeNum!].isStart = true;
+      setGrid(maze);
     } else if (isGoalClicked) {
-      const grid = [...maze];
-      grid[goalNode.rowNum!][goalNode.nodeNum!].isGoal = false;
+      logInfo("moving goal node");
+      maze[goalNode.rowNum!][goalNode.nodeNum!].isGoal = false;
       setGoalNode(node);
-      grid[node.rowNum][node.nodeNum].isGoal = true;
-      setGrid(grid);
+      maze[node.rowNum!][node.nodeNum!].isGoal = true;
+      setGrid(maze);
     }
   }
 
-  const [draggedNode, setDraggedNode] = useState<any>(null);
+  const [draggedNode, setDraggedNode] = useState<ParNodeType | null>(null);
 
   function onDragStart(DraggedNode: ParNodeType) {
     setDraggedNode(DraggedNode);
@@ -62,7 +75,10 @@ const ViewGrid = () => {
     if (!draggedNode) return;
     if (isNodeEqual(newNode, startNode) || isNodeEqual(newNode, goalNode))
       return;
-    if (newNode.isWall) return;
+    if (newNode.isWall) {
+      errorToast("Sorry, its a wall", "wall");
+      return;
+    }
 
     const grid = [...maze];
 
@@ -88,26 +104,16 @@ const ViewGrid = () => {
             <div key={rowNum} className="flex">
               {row?.map((node) => (
                 <div
+                  key={node.rowNum + "-" + node.nodeNum}
+                  onClick={() => onNodeClick(node)}
                   draggable={node.isStart || node.isGoal}
                   onDragStart={() => onDragStart(node)}
                   onDragOver={(e) => e.preventDefault()}
                   onDrop={() => onDrop(node)}
-                  key={node.rowNum + "-" + node.nodeNum}
-                  onClick={() => {
-                    setisStartClicked(false);
-                    setisGoalClicked(false);
-
-                    isNodeEqual(node, startNode)
-                      ? setisStartClicked(true)
-                      : isNodeEqual(node, goalNode)
-                      ? setisGoalClicked(true)
-                      : "";
-                    onNodeClick(node);
-                  }}
                   className={cn(
-                    `${gridSize === "sm" && "size-[1.81rem]"}`,
-                    `${gridSize === "md" && "size-[1.31rem]"}`,
-                    `${gridSize === "lg" && "size-[0.971rem]"}`,
+                    `${gridSize === "sm" && "sm:size-[1.5rem] md:size-[1.4rem] lg:size-[1.81rem]"}`,
+                    `${gridSize === "md" && "md:size-[1.01rem] lg:size-[1.31rem]"}`,
+                    `${gridSize === "lg" && "md:size-[0.751rem] lg:size-[0.971rem]"}`,
                     "border-blue-800/70 border hover:bg-blue-200 hover:cursor-pointer ",
                     `${
                       node.isPath && node.isExplored
@@ -153,7 +159,7 @@ const ViewGrid = () => {
                   )}
                 >
                   {node.isWall && (
-                    <BrickWall color="grey" className="w-full h-full" />
+                    <BrickWall color="grey" className="size-full" />
                   )}
                 </div>
               ))}
@@ -166,3 +172,10 @@ const ViewGrid = () => {
 };
 
 export default ViewGrid;
+
+function isNodeEqual(node1: any, node2: any) {
+  if (node1.rowNum === node2.rowNum && node1.nodeNum === node2.nodeNum) {
+    return true;
+  }
+  return false;
+}
