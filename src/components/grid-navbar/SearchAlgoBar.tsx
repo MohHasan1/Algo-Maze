@@ -114,7 +114,7 @@ const SearchAlgoBar = () => {
         />
         <Button
           disabled={isSearchAlgProgress || isMazeAlgProgress}
-          variant={"outline"}
+          variant={"blue"}
           onClick={runAlg}
         >
           Search Maze

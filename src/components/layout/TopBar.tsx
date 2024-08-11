@@ -6,7 +6,7 @@ const TopBar = () => {
     <header className="relative min-h-14 flex justify-start items-center p-4 gap-4">
       <AnimatedGridBg />
 
-      <AnimatedShinyText className="text-[#87CEFA]/75 cursor-default text-4xl font-medium transition ease-out hover:text-neutral-600 hover:duration-300 hover:dark:text-neutral-400">
+      <AnimatedShinyText className="text-[#87CEFA]/85 cursor-default text-4xl font-medium ">
         Algo-Lab
       </AnimatedShinyText>
     </header>

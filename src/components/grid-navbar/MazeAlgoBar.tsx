@@ -71,7 +71,7 @@ const MazeAlgoBar = () => {
 
         <Button
           disabled={isMazeAlgProgress || isSearchAlgProgress}
-          variant={"outline"}
+          variant={"blue"}
           onClick={runMazeAlgo}
         >
           Generate Maze
