@@ -1,7 +1,6 @@
 import AnimatedGridBg from "@/components/background/AnimatedGridBg";
 import FlipText from "@/components/magicui/flip-text";
 import SparklesText from "@/components/magicui/sparkles-text";
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
 

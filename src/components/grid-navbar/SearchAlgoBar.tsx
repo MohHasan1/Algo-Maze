@@ -7,7 +7,7 @@ import { SEARCH_ALGO, SEARCH_STATUS } from "@/constants/constant";
 import { Slider } from "../ui/slider";
 import { logInfo } from "@/utils/log";
 import DFS from "@/algorithms/search/DFS/dfsSearch";
-import { ToastContainerWrapper, useToast } from "../Toast";
+import {  useToast } from "../Toast";
 
 const SearchAlgoBar = () => {
   // State Variables

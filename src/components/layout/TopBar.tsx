@@ -2,8 +2,7 @@ import Guid from "@/page/Guid";
 import AnimatedGridBg from "../background/AnimatedGridBg";
 import AnimatedShinyText from "../magicui/animated-shiny-text";
 import Alert from "../Alert";
-import AnimatedGradientText from "../magicui/animated-gradient-text";
-import { cn } from "@/lib/utils";
+
 import AnimatedGradientTxt from "../typography/AnimatedGradientText";
 import { CircleHelp } from "lucide-react";
 
