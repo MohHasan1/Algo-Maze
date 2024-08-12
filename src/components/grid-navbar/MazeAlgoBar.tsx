@@ -1,15 +1,14 @@
 import { Button } from "../ui/button";
-
 import useStore from "@/store/store";
 import OptionSelect from "../select/OptionSelect";
 import GradientText from "../typography/GradientText";
-
 import { deepCopy } from "@/utils/deepCopy";
 import { MAZE_ALGO, MAZE_STATUS } from "@/constants/constant";
 import { GridType } from "@/types/type";
 import createBTM from "@/algorithms/maze/binary-tree-maze/createBTM";
 import createQuickBTM from "@/algorithms/maze/binary-tree-maze/createQuickBTM";
 import { stopMazeGen } from "@/algorithms/maze/mazeState";
+
 
 const MazeAlgoBar = () => {
   const rows = useStore((state) => state.rows);
@@ -32,7 +31,7 @@ const MazeAlgoBar = () => {
 
     if (mazeAlgo === MAZE_ALGO.BTM) {
       algRes = await createBTM(rows, nodes, setGrid);
-    }
+    } 
 
     // If the maze gen is stopped mid way, createBTM() returns a string and we dont want to set the clean maze.
     if (algRes! !== MAZE_STATUS.MazeGenStop) {
@@ -85,4 +84,4 @@ const MazeAlgoBar = () => {
 
 export default MazeAlgoBar;
 
-const mazeGenAlg = [{ value: MAZE_ALGO.BTM, label: "Binary Tree Maze (BTM)" }];
+const mazeGenAlg = [{ value: MAZE_ALGO.BTM, label: "Binary Tree Maze (BTM)" },];

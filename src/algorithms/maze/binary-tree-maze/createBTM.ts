@@ -182,5 +182,4 @@ async function initializeStartAndGoalNodes(
   // we want to wait untill it finishes //
   await addPoints(0);
 
-  return maze;
 }

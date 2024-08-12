@@ -11,8 +11,8 @@ module.exports = {
   theme: {
     screens: {
       sm: "768px",
-      md: "1024px",
-      lg: '1280px',
+      md: "1000px",
+      lg: "1280px",
     },
     container: {
       center: true,
@@ -58,8 +58,8 @@ module.exports = {
         },
         blue: {
           DEFAULT: "#87CEFA", // Light sky blue
-          light: "rgb(30 58 138 / 0.35)",  
-          dark: " rgb(30 58 138 / 0.65)", 
+          light: "rgb(30 58 138 / 0.35)",
+          dark: " rgb(30 58 138 / 0.65)",
         },
       },
       borderRadius: {
@@ -118,6 +118,11 @@ module.exports = {
             "background-position": "calc(100% + var(--shimmer-width)) 0",
           },
         },
+        gradient: {
+          to: {
+            backgroundPosition: "var(--bg-size) 0",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -127,6 +132,7 @@ module.exports = {
         backgroundPositionSpin:
           "background-position-spin 3000ms infinite alternate",
         shimmer: "shimmer 8s infinite",
+        gradient: "gradient 8s linear infinite",
       },
     },
   },

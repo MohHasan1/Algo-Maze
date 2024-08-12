@@ -120,8 +120,6 @@ const SearchAlgoBar = () => {
           Search Maze
         </Button>
         {/* <Button onClick={stopSearch}>stop vis</Button> */}
-
-        <ToastContainerWrapper />
       </div>
     </>
   );

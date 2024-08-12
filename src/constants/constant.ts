@@ -1,3 +1,9 @@
+export const SCREEN_SIZE = {
+  sm: "768px",
+  md: "1000px",
+  lg: "1280px",
+};
+
 export const INITIAL_GRID = { rows: 21, nodes: 21 };
 
 export const GRID_SIZE = {
@@ -7,7 +13,10 @@ export const GRID_SIZE = {
 };
 
 // Local Storage //
-export const LOCAL_STORAGE = { IS_INTRO_SHOWN: "isIntroShown" };
+export const LOCAL_STORAGE = {
+  IS_INTRO_SHOWN: "isIntroShown",
+  IS_GUID_SHOWN: "isGuidShown",
+};
 
 // Search Alg //
 export const SEARCH_ALGO = {

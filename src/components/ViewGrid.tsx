@@ -111,9 +111,17 @@ const ViewGrid = () => {
                   onDragOver={(e) => e.preventDefault()}
                   onDrop={() => onDrop(node)}
                   className={cn(
-                    `${gridSize === "sm" && "sm:size-[1.5rem] md:size-[1.4rem] lg:size-[1.81rem]"}`,
-                    `${gridSize === "md" && "md:size-[1.01rem] lg:size-[1.31rem]"}`,
-                    `${gridSize === "lg" && "md:size-[0.751rem] lg:size-[0.971rem]"}`,
+                    `${
+                      gridSize === "sm" &&
+                      "sm:size-[1.5rem] md:size-[1.4rem] lg:size-[1.81rem]"
+                    }`,
+                    `${
+                      gridSize === "md" && "md:size-[1.01rem] lg:size-[1.31rem]"
+                    }`,
+                    `${
+                      gridSize === "lg" &&
+                      "md:size-[0.751rem] lg:size-[0.971rem]"
+                    }`,
                     "border-blue-800/70 border hover:bg-blue-200 hover:cursor-pointer ",
                     `${
                       node.isPath && node.isExplored

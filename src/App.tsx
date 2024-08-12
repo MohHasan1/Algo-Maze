@@ -1,20 +1,29 @@
+import Alert from "./components/Alert";
 import PageTransition from "./components/PageTransition";
+import { ToastContainerWrapper } from "./components/Toast";
 import { LOCAL_STORAGE } from "./constants/constant";
+import { useLocalStorage } from "./hooks/useLocalStorage";
+import Guid from "./page/Guid";
 import Intro from "./page/Intro";
 import Maze from "./page/Maze";
 import ScreenNotSupported from "./page/ScreenNotSupported";
 
 function App() {
   const isIntroShown = sessionStorage.getItem(LOCAL_STORAGE.IS_INTRO_SHOWN);
+  // const { storedValue, setLSValue, deleteLSValue } = useLocalStorage(
+  //   LOCAL_STORAGE.IS_INTRO_SHOWN
+  // );
 
   const page = (
     <>
       <div className="hidden md:block">
-        <Maze />;
+        <Maze />
       </div>
       <div className="block md:hidden">
         <ScreenNotSupported />
       </div>
+
+      <ToastContainerWrapper />
     </>
   );
 
