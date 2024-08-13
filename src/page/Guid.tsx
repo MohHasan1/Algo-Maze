@@ -38,8 +38,8 @@ export default function CarouselDApiDemo() {
   ];
 
   return (
-    <div className="flex flex-col items-center ">
-      <Carousel setApi={setApi} className="md:max-w-[50%] lg:max-w-[55%] h-[100%]">
+    <div className="flex flex-col items-center">
+      <Carousel setApi={setApi} className="md:max-w-[45%] lg:max-w-[55%] flex-1">
         <CarouselContent>
           {guids.map((guid, index) => (
             <CarouselItem key={index}>{guid}</CarouselItem>
@@ -49,7 +49,7 @@ export default function CarouselDApiDemo() {
         <CarouselNext />
       </Carousel>
 
-      <div className="pt-7 text-center text-sm text-muted-foreground">
+      <div className="md:pt-2 lg:pt-5 text-center text-sm text-muted-foreground">
         Guide Slide {current} of {count}
       </div>
     </div>

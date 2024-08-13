@@ -8,7 +8,7 @@ import { CircleHelp } from "lucide-react";
 
 const TopBar = () => {
   return (
-    <header className="relative min-h-14 flex justify-between items-center p-4 gap-4">
+    <header className="relative h-14 flex justify-between items-center p-4 gap-4">
       <AnimatedGridBg />
 
       <AnimatedShinyText className="text-[#87CEFA]/85 cursor-default text-4xl font-medium ">

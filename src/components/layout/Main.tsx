@@ -5,7 +5,7 @@ import ShineBorderWrp from "../wrapper/ShineBorderWrp";
 const Main = () => {
   return (
     <>
-      <ShineBorderWrp className="overflow-hidden h-[calc(100vh-10.11rem)] w-full flex justify-around items-center rounded-lg border bg-background shadow-xl">
+      <ShineBorderWrp className="overflow-hidden flex-1 w-full flex justify-around items-center rounded-lg border bg-background shadow-xl">
         <section className="flex flex-col md:flex-row justify-evenly items-center">
           <div className="w-[40%] flex justify-center">
             <ViewGrid />

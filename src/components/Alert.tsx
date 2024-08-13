@@ -34,13 +34,13 @@ const Alert: FC<AlertProps> = ({ label, children }) => {
   return (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogTrigger>{label}</AlertDialogTrigger>
-      <AlertDialogContent className="max-w-screen h-[80%] overflow-hidden flex flex-col items-center justify-center">
+      <AlertDialogContent className="max-w-screen md:h-[84dvh] lg:h-[88dvh] overflow-hidden flex flex-col items-center justify-center">
         <AnimatedGridBg className="h-screen" />
-        <AlertDialogTitle>Getting Started Guide</AlertDialogTitle>
+        <AlertDialogTitle hidden={true}>User Onboarding Guide</AlertDialogTitle>
         <AlertDialogHeader>{children}</AlertDialogHeader>
         <AlertDialogDescription hidden={true}></AlertDialogDescription>
         <AlertDialogFooter>
-          <AlertDialogCancel>Close Guide</AlertDialogCancel>
+          <AlertDialogCancel>Close User Guide</AlertDialogCancel>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

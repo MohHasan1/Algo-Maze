@@ -45,13 +45,14 @@ const MazeAndGridBar = () => {
   }
 
   return (
-    <div className="flex flex-col  md:gap-3 lg:gap-5">
+    <div className="flex flex-col  md:gap-2 lg:gap-4">
       <GradientText>Grid and Maze Controls</GradientText>
 
       <Button
         disabled={isMazeAlgProgress}
         variant={"destructive"}
         onClick={handleReset}
+        size={"sm"}
       >
         Reset Maze
       </Button>
@@ -60,6 +61,7 @@ const MazeAndGridBar = () => {
         disabled={isMazeAlgProgress || isSearchAlgProgress}
         variant={"destructive"}
         onClick={handleClearGrid}
+        size={"sm"}
       >
         Clear Grid
       </Button>

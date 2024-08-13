@@ -31,7 +31,7 @@ const ShimmerButton = React.forwardRef<HTMLButtonElement, ShimmerButtonProps>(
       <button
         style={
           {
-            "--spread": "90deg",
+            "--spread": "40deg",
             "--shimmer-color": shimmerColor,
             "--radius": borderRadius,
             "--speed": shimmerDuration,

@@ -6,7 +6,7 @@ import ResetGrid from "./MazeAndGridBar";
 const GridNavBar = () => {
   return (
     <>
-      <section className="flex flex-col gap-4">
+      <section className="flex flex-col md:gap-2 lg:gap-4">
         <GridSizeOpt />
         <MazeGenOpt />
         <MazeSolvingAlgOpt />

@@ -90,7 +90,6 @@ const SearchAlgoBar = () => {
   }
 
   function handleSpeedChange(value: number[]) {
-    logInfo(200 - value[0]);
     setMazeSolveV(200 - value[0]);
   }
 
