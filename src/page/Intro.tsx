@@ -30,7 +30,7 @@ const Intro = () => {
   );
 
   return (
-    <main className="relative flex h-screen w-full items-center justify-center overflow-hidden rounded-lg border bg-background p-20 md:shadow-xl">
+    <main className="relative flex h-dvh w-full items-center justify-center overflow-hidden rounded-lg border bg-background p-20 md:shadow-xl">
       <AnimatedGridBg />
       <div className="cursor-default z-10  text-center text-5xl font-medium ">
         <p> Welcome to </p>
@@ -42,7 +42,6 @@ const Intro = () => {
           )}
         </span>
       </div>
-
     </main>
   );
 };
