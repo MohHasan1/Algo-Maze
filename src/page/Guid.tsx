@@ -1,6 +1,7 @@
 import GridControlsGuid from "@/components/guid/GridControlsGuid";
 import GridSizeGuid from "@/components/guid/GridSizeGuid";
 import MazeAlgGuid from "@/components/guid/MazeAlgGuid";
+import MazeNodesGuid from "@/components/guid/MazeNodesGuid";
 import SearchAlgGuid from "@/components/guid/SearchAlgGuid";
 import {
   Carousel,
@@ -31,6 +32,7 @@ export default function CarouselDApiDemo() {
   }, [api]);
 
   const guids = [
+    <MazeNodesGuid />,
     <GridSizeGuid />,
     <MazeAlgGuid />,
     <SearchAlgGuid />,
@@ -39,7 +41,10 @@ export default function CarouselDApiDemo() {
 
   return (
     <div className="flex flex-col items-center">
-      <Carousel setApi={setApi} className="md:max-w-[45%] lg:max-w-[55%] flex-1">
+      <Carousel
+        setApi={setApi}
+        className="md:max-w-[35%] lg:max-w-[45%] flex-1"
+      >
         <CarouselContent>
           {guids.map((guid, index) => (
             <CarouselItem key={index}>{guid}</CarouselItem>

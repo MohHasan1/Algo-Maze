@@ -1,30 +1,32 @@
-# React + TypeScript + Vite
+# Algo-Lab: Maze Visualization Tool
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[**View the Demo**](https://algo-lab.netlify.app)
 
-Currently, two official plugins are available:
+## Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The Maze Visualization Tool is an interactive web application that allows users to create, explore, and visualize various pathfinding algorithms on dynamically generated mazes. This tool is designed to be educational, providing insights into how different algorithms work in finding the shortest path through a maze.
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **Maze Generation**: Generate mazes using different algorithms.
+- **Start/Goal Node Interaction**: Easily change the start or goal node by clicking or dragging nodes.
+- **Algorithm Visualization**: Visualize popular algorithms like BFS, and DFS
+- **Responsive Design**: Optimized for use on both desktop and Ipad devices (not supported on phoned).
+- **Customizable Grid**: Adjust the grid size and maze complexity to explore various scenarios.
 
-- Configure the top-level `parserOptions` property like this:
+### Interacting with the Maze
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json', './tsconfig.app.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+- **Change Start/Goal Nodes**: Click on the start or goal node, then click on the desired location to swap it. You can also drag the start or goal node to a new position.
+- **Algorithm Selection**: Choose an algorithm from the dropdown menu and watch it in action as it finds the shortest path in the maze.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### Supported Algorithms
+
+- **Breadth-First Search (BFS)**
+- **Depth-First Search (DFS)**
+
+export default App;
+You can view the interactive demo of the project [here](https://algo-lab.netlify.app).
+
+---
+
+_This project is continuously evolving. Stay tuned for more features and improvements!_

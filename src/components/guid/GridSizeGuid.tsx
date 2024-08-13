@@ -1,15 +1,21 @@
-
 import RadioSelect from "@/components/select/RadioSelect";
 import GradientText from "@/components/typography/GradientText";
 import GuidWrp from "../wrapper/GuidWrp";
+import { Proportions } from "lucide-react";
 
 const GridSizeGuid = () => {
   return (
     <>
       <GuidWrp>
-        <p className="text-3xl font-semibold text-blue-300 mb-4">
-          Changing Grid Dimension
-        </p>
+
+        <div className="flex justify-center items-center gap-3 text-blue-300 mb-4">
+          <p className="text-3xl font-semibold">
+            Changing Grid Dimension
+          </p>
+          <div>
+            <Proportions  />
+          </div>
+        </div>
 
         <GridSizeExmaple />
 
