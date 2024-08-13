@@ -5,7 +5,6 @@ import GradientText from "../typography/GradientText";
 import { Button } from "../ui/button";
 import { SEARCH_ALGO, SEARCH_STATUS } from "@/constants/constant";
 import { Slider } from "../ui/slider";
-import { logInfo } from "@/utils/log";
 import DFS from "@/algorithms/search/DFS/dfsSearch";
 import {  useToast } from "../Toast";
 
