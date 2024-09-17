@@ -24,6 +24,7 @@ function App() {
     </>
   );
 
+  // Returns exclusive-or page below:
   if (isIntroShown === null) {
     sessionStorage.setItem(LOCAL_STORAGE.IS_INTRO_SHOWN, "true");
     return (
