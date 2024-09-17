@@ -10,7 +10,7 @@ const Footer = () => {
 
       <section className="md:h-14 lg:h-16 p-3 md:p-5 flex justify-end items-center gap-5">
         <a
-          href="https://linkedin.com/in/mohammed-hasan-41444b268"
+          href="https://linkedin.com/in/hasan-in"
           target="_blank"
           rel="noopener noreferrer"
         >
