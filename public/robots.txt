@@ -3,4 +3,4 @@ User-agent: *
 Disallow:
 
 # Sitemap location
-Sitemap: https://algo-lab.netlify.app/sitemap.xml
+Sitemap: https://algo-mazes.netlify.app/sitemap.xml

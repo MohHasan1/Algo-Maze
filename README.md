@@ -1,6 +1,6 @@
 # Algo-Maze: Maze Visualization Tool
 
-[**View the Demo**](https://algo-lab.netlify.app)
+[**View the Demo**](https://algo-mazes.netlify.app)
 
 ## Overview
 
