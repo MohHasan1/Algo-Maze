@@ -12,7 +12,7 @@ const TopBar = () => {
       <AnimatedGridBg />
 
       <AnimatedShinyText className="text-[#87CEFA]/85 cursor-default text-4xl font-medium ">
-        Algo-Lab
+        Algo-Maze
       </AnimatedShinyText>
 
       <Alert label={<AlertLabel />}>

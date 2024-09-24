@@ -36,9 +36,9 @@ const Intro = () => {
         <p> Welcome to </p>
         <span>
           {!showSparkles ? (
-            <FlipText className={textClasses} word="Algo-Lab" />
+            <FlipText className={textClasses} word="Algo-Maze" />
           ) : (
-            <SparklesText className={textClasses} text="Algo-Lab" />
+            <SparklesText className={textClasses} text="Algo-Maze" />
           )}
         </span>
       </div>
