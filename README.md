@@ -25,7 +25,7 @@ The Maze Visualization Tool is an interactive web application that allows users 
 
 - **Breadth-First Search (BFS)**
 - **Depth-First Search (DFS)**
-- *More will be added soon**
+- *More will be added soon*
 
 
 You can explore the website by clicking [here](https://algo-lab.netlify.app).
