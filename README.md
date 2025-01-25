@@ -1,6 +1,6 @@
 # Algo-Maze: Maze Visualization Tool
 
-[**View the Demo**](https://algo-mazes.netlify.app)
+[**Jump straight to the website and explore!**](https://algo-mazes.netlify.app)
 
 ## Overview
 
@@ -11,7 +11,7 @@ The Maze Visualization Tool is an interactive web application that allows users 
 - **Maze Generation**: Generate mazes using different algorithms.
 - **Start/Goal Node Interaction**: Easily change the start or goal node by clicking or dragging nodes.
 - **Algorithm Visualization**: Visualize popular algorithms like BFS, and DFS
-- **Responsive Design**: Optimized for use on both desktop and Ipad devices (not supported on phoned).
+- **Responsive Design**: Optimized for use on both desktop and Ipad devices (not supported on phone -- yet).
 - **Customizable Grid**: Adjust the grid size and maze complexity to explore various scenarios.
 
 ### Interacting with the Maze
@@ -23,9 +23,10 @@ The Maze Visualization Tool is an interactive web application that allows users 
 
 - **Breadth-First Search (BFS)**
 - **Depth-First Search (DFS)**
+- *More will be added soon**
 
 export default App;
-You can view the interactive demo of the project [here](https://algo-lab.netlify.app).
+You can explore the website by clicking [here](https://algo-lab.netlify.app).
 
 ---
 
