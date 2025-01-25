@@ -1,8 +1,11 @@
 # Algo-Maze: Maze Visualization Tool
 
-<a href="https://algo-mazes.netlify.app" style="display:block; text-align:center; font-weight:bold; font-size:18px;">
-Jump straight to the website and explore!
-</a>
+<div align="center">
+  <a href="https://algo-mazes.netlify.app" target="_blank" style="font-weight: bold; font-size: 18px;">
+    Jump straight to the website and explore!
+  </a>
+</div>
+
 
 
 ![Maze Visualization Preview](https://algo-mazes.netlify.app/intro.png)
