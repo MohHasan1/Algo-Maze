@@ -1,8 +1,8 @@
 # Algo-Maze: Maze Visualization Tool
 
 <div align="center">
-  [**Jump straight to the website and explore!**](https://algo-mazes.netlify.app)
-</div>Ï
+  **[Jump straight to the website and explore!](https://algo-mazes.netlify.app)**
+</div>
 
 ![Maze Visualization Preview](https://algo-mazes.netlify.app/intro.png)
 
