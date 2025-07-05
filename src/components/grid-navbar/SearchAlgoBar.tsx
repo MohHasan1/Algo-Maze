@@ -94,7 +94,7 @@ const SearchAlgoBar = () => {
 
   return (
     <>
-      <div className="flex flex-col md:gap-3 lg:gap-5">
+      <div className="flex flex-col gap-2 md:gap-3 lg:gap-5">
         <GradientText>Search Algorithm</GradientText>
         <Slider
           defaultValue={[200 - 33.5]}

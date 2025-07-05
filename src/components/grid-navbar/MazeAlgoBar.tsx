@@ -52,7 +52,7 @@ const MazeAlgoBar = () => {
 
   return (
     <>
-      <div className="flex flex-col md:gap-3 lg:gap-5">
+      <div className="flex flex-col gap-2 md:gap-3 lg:gap-5">
         <GradientText>Maze Algorithm</GradientText>
 
         <div className="flex gap-5">

@@ -3,7 +3,7 @@ import { ToastContainerWrapper } from "./components/Toast";
 import { LOCAL_STORAGE } from "./constants/constant";
 import Intro from "./page/Intro";
 import Maze from "./page/Maze";
-import ScreenNotSupported from "./page/ScreenNotSupported";
+import MobileMaze from "./page/MobileMaze";
 
 function App() {
   const isIntroShown = sessionStorage.getItem(LOCAL_STORAGE.IS_INTRO_SHOWN);
@@ -17,7 +17,7 @@ function App() {
         <Maze />
       </div>
       <div className="block md:hidden">
-        <ScreenNotSupported />
+        <MobileMaze />
       </div>
 
       <ToastContainerWrapper />

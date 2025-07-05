@@ -66,7 +66,6 @@ const ViewGrid = () => {
   }
 
   const [draggedNode, setDraggedNode] = useState<ParNodeType | null>(null);
-
   function onDragStart(DraggedNode: ParNodeType) {
     setDraggedNode(DraggedNode);
   }
@@ -99,7 +98,7 @@ const ViewGrid = () => {
   return (
     <>
       <NeonGradientCard className="w-fit" padding="p-0" borderRadius={0}>
-        <section className="relative w-fit  border-blue-300">
+        <section className="relative w-fit h-fit  border-blue-300">
           {maze?.map((row, rowNum) => (
             <div key={rowNum} className="flex">
               {row?.map((node) => (
@@ -113,14 +112,15 @@ const ViewGrid = () => {
                   className={cn(
                     `${
                       gridSize === "sm" &&
-                      "sm:size-[1.5rem] md:size-[1.4rem] lg:size-[1.81rem]"
+                      "size-[16.5px] sm:size-[17.5px] md:size-[1.4rem] lg:size-[1.81rem]"
                     }`,
                     `${
-                      gridSize === "md" && "md:size-[1.01rem] lg:size-[1.31rem]"
+                      gridSize === "md" &&
+                      "size-[10px] md:size-[1.01rem] lg:size-[1.31rem]"
                     }`,
                     `${
                       gridSize === "lg" &&
-                      "md:size-[0.751rem] lg:size-[0.971rem]"
+                      "size-[8px] md:size-[0.751rem] lg:size-[0.971rem]"
                     }`,
                     "border-blue-800/70 border hover:bg-blue-200 hover:cursor-pointer ",
                     `${

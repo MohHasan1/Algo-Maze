@@ -11,11 +11,11 @@ const TopBar = () => {
     <header className="relative h-14 flex justify-between items-center p-4 gap-4">
       <AnimatedGridBg />
 
-      <AnimatedShinyText className="text-[#87CEFA]/85 cursor-default text-4xl font-medium ">
+      <AnimatedShinyText className="text-[#87CEFA]/85 cursor-default text-2xl md:text-4xl font-medium ">
         Algo-Maze
       </AnimatedShinyText>
 
-      <Alert label={<AlertLabel />}>
+      <Alert label={<AlertLabel />} >
         <Guid />
       </Alert>
     </header>

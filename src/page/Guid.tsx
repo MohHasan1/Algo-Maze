@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/carousel";
 import { useState, useEffect } from "react";
 
-export default function CarouselDApiDemo() {
+export default function GuidCarousel() {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
   const [count, setCount] = useState(0);
