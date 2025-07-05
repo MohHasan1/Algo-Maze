@@ -18,7 +18,7 @@ export type AlgoSliceType = State & Action;
 
 const createAlgoSlice: StateCreator<AlgoSliceType> = (set) => ({
   // Variables
-  searchAlgo: SEARCH_ALGO.NONE,
+  searchAlgo: SEARCH_ALGO.BFS,
   mazeAlgo: MAZE_ALGO.BTM,
   isMazeAlgProgress: false,
   isSearchAlgProgress: false,

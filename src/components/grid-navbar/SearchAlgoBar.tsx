@@ -6,7 +6,7 @@ import { Button } from "../ui/button";
 import { SEARCH_ALGO, SEARCH_STATUS } from "@/constants/constant";
 import { Slider } from "../ui/slider";
 import DFS from "@/algorithms/search/DFS/dfsSearch";
-import {  useToast } from "../Toast";
+import { useToast } from "../Toast";
 
 const SearchAlgoBar = () => {
   // State Variables
@@ -105,6 +105,7 @@ const SearchAlgoBar = () => {
         />
         <OptionSelect
           placeHolder={"Search Algorithm"}
+          defaultVal={searchAlgo}
           selectItems={mazeSolvingAlg}
           disabled={isSearchAlgProgress || isMazeAlgProgress}
           Fn={setSearchAlgo}

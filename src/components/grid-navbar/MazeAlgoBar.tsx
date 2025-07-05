@@ -59,6 +59,7 @@ const MazeAlgoBar = () => {
           <OptionSelect
             placeHolder={"Maze Algorithm"}
             selectItems={mazeGenAlg}
+            defaultVal={mazeAlgo}
             Fn={setMazeAlgo}
             className="w-full"
             disabled={isMazeAlgProgress || isSearchAlgProgress}
