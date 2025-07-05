@@ -30,8 +30,8 @@ const ShineBorderWrp: FC<Props> = ({
       {/* <div className="absolute size-full overflow-y-auto flex justify-center items-center py-10">
         {children}
       </div> */}
-      <div className="absolute flex justify-center items-center size-full overflow-y-auto">
-        <div className="flex justify-center items-center py-10 w-full" >
+      <div className="absolute size-full overflow-y-auto">
+        <div className="min-h-full w-full flex flex-col justify-center items-center py-10">
           {children}
         </div>
       </div>
